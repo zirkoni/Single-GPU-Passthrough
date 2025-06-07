@@ -30,3 +30,6 @@ echo 1 > /sys/class/vtconsole/vtcon1/bind
 
 # Restart Display Manager
 systemctl start display-manager
+
+# Stop SSH daemon
+systemctl disable --now sshd

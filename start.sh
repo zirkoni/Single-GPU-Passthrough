@@ -6,6 +6,9 @@
 
 set -x
 
+# Start SSH daemon
+systemctl start --now sshd
+
 # Stop display manager
 systemctl stop greetd
 systemctl stop display-manager

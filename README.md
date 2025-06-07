@@ -12,8 +12,9 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
 ### **Install the Required packages**
+SSH is only needed if you want to be able to control your host machine while a guest is running. Enable SSH on your host and use another physical device to connect to your host system remotely. This is useful for debugging and shutting down the VM in case something goes wrong since you cannot see any output from the host on your monitor while the guest is running.
 ```sh
-sudo pacman -S --needed qemu-desktop virt-manager libvirt edk2-ovmf dnsmasq
+sudo pacman -S --needed qemu-desktop virt-manager libvirt edk2-ovmf dnsmasq openssh
 ```
 
 ### **Configure the System**
