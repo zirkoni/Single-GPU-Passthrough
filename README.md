@@ -38,6 +38,7 @@ Launch virt-manager and create a new virtual machine. Most default settings are 
 
 ### **PCI Devices Setup**
 First remove the following unnecessary devices:
+```
 Tablet
 Display Spice
 Sound ich*
@@ -45,6 +46,7 @@ Console
 Channel (qemu-ga)
 Channel (spice)
 Video Virtio
+```
 
 Use the following script to list the IOMMU groups and attached devices:
 ```sh
@@ -59,13 +61,17 @@ done;
 ```
 
 Next click on <i>Add Hardware</i> and select <i>PCI Host Device</i>. You need to add the entire IOMMU group as listed in the output of the script here, not just the GPU VGA. For the GPU I had to add the following devices:
+```
 0000:06:00:0 NVIDIA Corporation TU116 [GeForce GTX 1660 SUPER]
 0000:06:00:1 NVIDIA Corporation TU116 High Definition Audio Controller
 0000:06:00:2 NVIDIA Corporation TU116 USB 3.1 Host Controller
 0000:06:00:3 NVIDIA Corporation TU116 USB Type-C UCSI Controller
+```
 
 I also added the USB controller to get my keyboard and mouse working inside the guest OS:
+```
 0000:08:00:3 Advanced Micro Devices, Inc [AMD] Matisse USB 3.0 Host Controller
+```
 
 ### **Configure Libvirt Hooks**
 Copy the <i>qemu</i> script to (should not need to modify anything):
