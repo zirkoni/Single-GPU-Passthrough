@@ -40,6 +40,8 @@ sudo virsh net-start default
 ### **Setup the Guest OS**
 Launch virt-manager and create a new virtual machine. Most default settings are fine but check in the <i>Overview</i> section that Chipset is set to Q35 and Firmware to UEFI.
 
+Start the guest installation without the passthrough now.
+
 ### **PCI Devices Setup**
 First remove the following unnecessary devices:
 ```
