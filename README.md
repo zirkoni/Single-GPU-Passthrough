@@ -2,9 +2,12 @@
 Enable AMD-V in the settings. Also, disable Resizable BAR Support (todo: check if ReBAR support is available for KVM).
 
 ### **Enable IOMMU**
-<b>Grub</b>
+Only grub instructions but the parameters should be the same for any other boot manager.
+
 Edit <i>/etc/default/grub</i> and add the following kernel parameters:
-<i>GRUB_CMDLINE_LINUX_DEFAULT="... amd_iommu=on iommu=pt ..."</i>
+```
+GRUB_CMDLINE_LINUX_DEFAULT="... amd_iommu=on iommu=pt ..."
+```
 
 Generate the grub.cfg:
 ```sh
@@ -83,7 +86,7 @@ echo 0 | sudo tee /sys/bus/pci/devices/0000:01:00.0/rom
 ```
 
 Add the vBIOS path inside the hostdev block of your guest XML (/etc/libvirt/qemu/<guest_name>.xml):
-```
+```xml
 ...
 <hostdev mode='subsystem' type='pci' managed='yes'>
   <source>
