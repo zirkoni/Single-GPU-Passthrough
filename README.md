@@ -73,6 +73,27 @@ I also added the USB controller to get my keyboard and mouse working inside the 
 0000:08:00:3 Advanced Micro Devices, Inc [AMD] Matisse USB 3.0 Host Controller
 ```
 
+### **Dump the GPU vBIOS**
+Run the following commands (the file name can be different, your choice):
+```sh
+echo 1 | sudo tee /sys/bus/pci/devices/0000:01:00.0/rom
+sudo cat /sys/bus/pci/devices/0000:01:00.0/rom > /usr/share/vgabios/vbios.rom
+echo 0 | sudo tee /sys/bus/pci/devices/0000:01:00.0/rom
+```
+
+Add the vBIOS path inside the hostdev block of your guest XML (/etc/libvirt/qemu/<guest_name>.xml):
+```
+...
+<hostdev mode='subsystem' type='pci' managed='yes'>
+  <source>
+    ...
+  </source>
+  <rom file='/usr/share/vgabios/vbios.rom'/>
+  ...
+</hostdev>
+...
+```
+
 ### **Configure Libvirt Hooks**
 Copy the <i>qemu</i> script to (should not need to modify anything):
 ```sh
