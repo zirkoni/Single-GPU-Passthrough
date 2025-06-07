@@ -120,6 +120,11 @@ Do the same for the <i>stop.sh</i> script but to a different path:
 ```
 Again, you'll need to modify the script for your setup.
 
+You have to set the scripts as executable:
+```sh
+sudo chmod +x <path_to_file>
+```
+
 And that is all I had to do! When you start the guest VM your host desktop should close, the screen goes black and after some time you should see the guest booting up.
 
 ### **Additional Sources**
