@@ -1,9 +1,9 @@
 ### **My setup**
-CPU: AMD Ryzen 5600X
-GPU: Nvidia 1660 Super
-OS: Arch Linux
+**These instructions are for my personal reference but might be useful for others as well.**
 
-These instructions are for my personal reference but might be useful for others as well.
+- CPU: AMD Ryzen 5600X
+- GPU: Nvidia 1660 Super
+- OS: Arch Linux
 
 ### **Enable Virtualization in the UEFI/BIOS**
 Enable AMD-V in the settings. Also, disable Resizable BAR Support (todo: check if ReBAR support is available for KVM).
