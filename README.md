@@ -110,6 +110,7 @@ Add the vBIOS path inside the hostdev block of your guest XML (/etc/libvirt/qemu
 ### **Configure Libvirt Hooks**
 - OPTION 1: Use the <i>setup_new_vm.sh</i> script
 - OPTION 2: Configure manually
+
 Copy the <i>qemu</i> script to (should not need to modify anything):
 ```sh
 /etc/libvirt/hooks/qemu
