@@ -1,4 +1,4 @@
-### **My setup**
+### **My Setup**
 **These instructions are for my personal reference but might be useful for others as well.**
 
 - CPU: AMD Ryzen 5600X
@@ -21,7 +21,7 @@ Generate the grub.cfg:
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
-### **Install the Required packages**
+### **Install the Required Packages**
 SSH is only needed if you want to be able to control your host machine while a guest is running. Enable SSH on your host and use another physical device to connect to your host system remotely. This is useful for debugging and shutting down the VM in case something goes wrong since you cannot see any output from the host on your monitor while the guest is running.
 ```sh
 sudo pacman -S --needed qemu-desktop virt-manager libvirt edk2-ovmf dnsmasq openssh
@@ -47,7 +47,7 @@ sudo virsh net-start default
 ### **Setup the Guest OS**
 Launch virt-manager and create a new virtual machine. Most default settings are fine but check in the <i>Overview</i> section that Chipset is set to Q35 and Firmware to UEFI.
 
-Start the guest installation without the passthrough now.
+Start the guest installation without the passthrough now. You don't have to actually install the guest OS yet, just starting it is enough so that some configuration files are created.
 
 ### **PCI Devices Setup**
 First remove the following unnecessary devices:
@@ -108,6 +108,8 @@ Add the vBIOS path inside the hostdev block of your guest XML (/etc/libvirt/qemu
 ```
 
 ### **Configure Libvirt Hooks**
+- OPTION 1: Use the <i>setup_new_vm.sh</i> script
+- OPTION 2: Configure manually
 Copy the <i>qemu</i> script to (should not need to modify anything):
 ```sh
 /etc/libvirt/hooks/qemu
@@ -132,7 +134,8 @@ You have to set the scripts as executable:
 sudo chmod +x <path_to_file>
 ```
 
-And that is all I had to do! When you start the guest VM your host desktop should close, the screen goes black and after some time you should see the guest booting up.
+
+When you start the guest VM your host desktop should close, the screen goes black and after some time you should see the guest booting up.
 
 ### **Additional Sources**
 I mostly followed this guide:
