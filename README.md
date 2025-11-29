@@ -93,6 +93,13 @@ echo 1 | sudo tee /sys/bus/pci/devices/0000:01:00.0/rom
 sudo cat /sys/bus/pci/devices/0000:01:00.0/rom > /usr/share/vgabios/vbios.rom
 echo 0 | sudo tee /sys/bus/pci/devices/0000:01:00.0/rom
 ```
+UPDATE: Need to use this path?
+```sh
+echo 1 | sudo tee /sys/bus/pci/devices/0000:06:00.0/rom
+sudo cat /sys/bus/pci/devices/0000:06:00.0/rom > vbios.rom
+echo 0 | sudo tee /sys/bus/pci/devices/0000:06:00.0/rom
+sudo mv vbios.rom /usr/share/vgabios/
+```
 
 Add the vBIOS path inside the hostdev block of your guest XML (/etc/libvirt/qemu/<guest_name>.xml):
 ```xml

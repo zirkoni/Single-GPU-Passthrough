@@ -6,7 +6,7 @@ if [ -z "$1" ]; then
 fi
 
 GUEST_NAME="$1"
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/scripts"
 SRC_QEMU="$SCRIPT_DIR/qemu"
 SRC_START="$SCRIPT_DIR/start.sh"
 SRC_STOP="$SCRIPT_DIR/stop.sh"
