@@ -38,10 +38,18 @@ sudo systemctl enable --now libvirtd
 
 <b>Reboot</b>
 
-These might be needed:
+Enable network connection for VMs
 ```sh
 sudo virsh net-autostart default
 sudo virsh net-start default
+```
+
+You might also need to configure the firewall. Here enp5s0 is my real host interface name.
+```sh
+sudo ufw allow in on virbr0
+sudo ufw allow out on virbr0
+sudo ufw route allow in on virbr0 out on enp5s0
+sudo ufw route allow in on enp5s0 out on virbr0
 ```
 
 ### **Setup the Guest OS**
