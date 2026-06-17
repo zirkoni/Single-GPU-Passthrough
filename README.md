@@ -53,7 +53,7 @@ sudo ufw route allow in on enp5s0 out on virbr0
 ```
 
 ### **Setup the Guest OS**
-Launch virt-manager and create a new virtual machine. Most default settings are fine but check in the <i>Overview</i> section that Chipset is set to Q35 and Firmware to UEFI.
+Launch virt-manager and create a new virtual machine. Most default settings are fine but check in the <i>Overview</i> section that <i>Chipset</i> is set to <i>Q35</i> and <i>Firmware</i> to <i>UEFI</i>.
 
 Start the guest installation without the passthrough now. You don't have to actually install the guest OS yet, just starting it is enough so that some configuration files are created.
 
@@ -81,7 +81,7 @@ for g in `find /sys/kernel/iommu_groups/* -maxdepth 0 -type d | sort -V`; do
 done;
 ```
 
-Next click on <i>Add Hardware</i> and select <i>PCI Host Device</i>. You need to add the entire IOMMU group as listed in the output of the script here, not just the GPU VGA. For the GPU I had to add the following devices:
+Next click on <i>Add Hardware</i> and select <i>PCI Host Device</i>. You need to add the entire IOMMU group as listed in the output of the script here, not just the GPU VGA. For my GPU I had to add the following devices:
 ```
 0000:06:00:0 NVIDIA Corporation TU116 [GeForce GTX 1660 SUPER]
 0000:06:00:1 NVIDIA Corporation TU116 High Definition Audio Controller
@@ -95,13 +95,7 @@ I also added the USB controller to get my keyboard and mouse working inside the 
 ```
 
 ### **Dump the GPU vBIOS**
-Run the following commands (the file name can be different, your choice):
-```sh
-echo 1 | sudo tee /sys/bus/pci/devices/0000:01:00.0/rom
-sudo cat /sys/bus/pci/devices/0000:01:00.0/rom > /usr/share/vgabios/vbios.rom
-echo 0 | sudo tee /sys/bus/pci/devices/0000:01:00.0/rom
-```
-UPDATE: Need to use this path?
+Run the following commands (note: <i>0000:06:00.0</i> is my GPU):
 ```sh
 echo 1 | sudo tee /sys/bus/pci/devices/0000:06:00.0/rom
 sudo cat /sys/bus/pci/devices/0000:06:00.0/rom > vbios.rom
@@ -112,15 +106,16 @@ sudo mv vbios.rom /usr/share/vgabios/
 Add the vBIOS path inside the hostdev block of your guest XML (/etc/libvirt/qemu/<guest_name>.xml):
 ```xml
 ...
-<hostdev mode='subsystem' type='pci' managed='yes'>
-  <source>
-    ...
-  </source>
-  <rom file='/usr/share/vgabios/vbios.rom'/>
-  ...
-</hostdev>
+    <hostdev mode='subsystem' type='pci' managed='yes'>
+      <source>
+        <address domain='0x0000' bus='0x06' slot='0x00' function='0x0'/>
+      </source>
+      <rom file='/usr/share/vgabios/vbios.rom'/>
+      <address type='pci' domain='0x0000' bus='0x07' slot='0x00' function='0x0'/>
+    </hostdev>
 ...
 ```
+Again, note that this hostdev block is for my GPU (0000:06:00:0).
 
 ### **Configure Libvirt Hooks**
 - OPTION 1: Use the <i>setup_new_vm.sh</i> script
