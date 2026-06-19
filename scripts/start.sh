@@ -10,6 +10,7 @@ set -x
 systemctl start --now sshd
 
 # Stop display manager
+systemctl --user stop graphical-session.target
 systemctl stop greetd
 systemctl stop display-manager
 

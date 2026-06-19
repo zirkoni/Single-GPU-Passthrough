@@ -23,6 +23,7 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 ### **Install the Required Packages**
 SSH is only needed if you want to be able to control your host machine while a guest is running. Enable SSH on your host and use another physical device to connect to your host system remotely. This is useful for debugging and shutting down the VM in case something goes wrong since you cannot see any output from the host on your monitor while the guest is running.
+Of course you can also connect to your host machine from the guest via SSH and transfer files between them.
 ```sh
 sudo pacman -S --needed qemu-desktop virt-manager libvirt edk2-ovmf dnsmasq openssh
 ```
@@ -55,7 +56,10 @@ sudo ufw route allow in on enp5s0 out on virbr0
 ### **Setup the Guest OS**
 Launch virt-manager and create a new virtual machine. Most default settings are fine but check in the <i>Overview</i> section that <i>Chipset</i> is set to <i>Q35</i> and <i>Firmware</i> to <i>UEFI</i>.
 
-Start the guest installation without the passthrough now. You don't have to actually install the guest OS yet, just starting it is enough so that some configuration files are created.
+<b>Start the guest installation without the passthrough now.</b>
+You should also install the Nvidia drivers at this point before configuring the passthrough.
+If the guest does not have the Nvidia drivers installed you'll likely have issues after the passthrough is enabled (black screen, GUI crash on startup).
+In that case you should still be able to use SSH or switch to a tty and install the Nvidia drivers.
 
 ### **PCI Devices Setup**
 First remove the following unnecessary devices:
