@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
 if [ -z "$1" ]; then
-    echo "Usage: $0 <guest_name>"
+    echo "Usage"
+    echo "Create: $0 <guest_name>"
+    echo "Remove: $0 <guest_name> -d"
+    echo "List:   $0 -l"
     exit 1
 fi
 
@@ -12,10 +15,21 @@ SRC_START="$SCRIPT_DIR/start.sh"
 SRC_STOP="$SCRIPT_DIR/stop.sh"
 
 TARGET_QEMU="/etc/libvirt/hooks/qemu"
-GUEST_HOOK_DIR="/etc/libvirt/hooks/qemu.d/$GUEST_NAME"
+GUEST_HOOK_BASE_DIR="/etc/libvirt/hooks/qemu.d"
+GUEST_HOOK_DIR="$GUEST_HOOK_BASE_DIR/$GUEST_NAME"
 TARGET_START="$GUEST_HOOK_DIR/prepare/begin/start.sh"
 TARGET_STOP="$GUEST_HOOK_DIR/release/end/stop.sh"
 GUEST_XML="/etc/libvirt/qemu/$GUEST_NAME.xml"
+
+if [ "$1" = "-l" ]; then
+    ls -la $GUEST_HOOK_BASE_DIR
+    exit 0
+fi
+
+if [ "$2" = "-d" ]; then
+    sudo rm -rf $GUEST_HOOK_DIR
+    exit 0
+fi
 
 if [ ! -f "$GUEST_XML" ]; then
     echo "Error: File $GUEST_XML does not exist."
